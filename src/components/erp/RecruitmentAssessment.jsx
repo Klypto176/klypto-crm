@@ -69,6 +69,7 @@ const RecruitmentAssessment = () => {
       });
       fetchJobs();
     } catch (err) {
+      console.error("Failed to update job", err);
       alert("Failed to update job");
     } finally {
       setSubmitting(false);
@@ -197,6 +198,7 @@ const RecruitmentAssessment = () => {
       });
       fetchJobs();
     } catch (err) {
+      console.error("Failed to create job", err);
       alert("Failed to create job");
     } finally {
       setSubmitting(false);
@@ -222,6 +224,7 @@ const RecruitmentAssessment = () => {
       });
       fetchCandidates();
     } catch (err) {
+      console.error("Failed to add candidate", err);
       alert("Failed to add candidate");
     } finally {
       setSubmitting(false);
@@ -252,6 +255,7 @@ const RecruitmentAssessment = () => {
       await apiClient.delete(`/recruitment/jobs/${id}`);
       await fetchJobs();
     } catch (err) {
+      console.error("Failed to delete job", err);
       alert("Failed to delete job");
     } finally {
       setActionLoading(null);
@@ -265,6 +269,7 @@ const RecruitmentAssessment = () => {
       await apiClient.delete(`/recruitment/candidates/${id}`);
       await fetchCandidates();
     } catch (err) {
+      console.error("Failed to delete candidate", err);
       alert("Failed to delete candidate");
     } finally {
       setActionLoading(null);
@@ -319,6 +324,7 @@ const RecruitmentAssessment = () => {
       });
     } catch (err) {
       setCandidates(previousCandidates);
+      console.error("Failed to update candidate stage", err);
       alert("Failed to update candidate stage");
     } finally {
       setActionLoading(null);
@@ -493,7 +499,7 @@ const RecruitmentAssessment = () => {
                   ·{" "}
                   <strong>
                     {normalizedJobSearch
-                      ? `Search \"${jobSearchTerm}\"`
+                      ? `Search "${jobSearchTerm}"`
                       : "No Search"}
                   </strong>
                 </div>

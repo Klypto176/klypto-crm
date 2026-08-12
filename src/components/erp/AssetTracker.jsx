@@ -108,6 +108,7 @@ const AssetTracker = () => {
       resetForm();
       fetchData();
     } catch (err) {
+      console.error("Failed to save asset", err);
       alert(editingAssetId ? "Failed to update asset" : "Failed to add asset");
     } finally {
       setSubmitting(false);
@@ -133,6 +134,7 @@ const AssetTracker = () => {
       await apiClient.delete(`/assets/${id}`);
       await fetchData();
     } catch (err) {
+      console.error("Failed to delete asset", err);
       alert("Failed to delete asset");
     } finally {
       setActionLoading(null);

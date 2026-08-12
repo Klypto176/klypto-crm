@@ -350,7 +350,7 @@ const PartnerMaster = () => {
           </strong>{" "}
           ·{" "}
           <strong>
-            {normalizedSearch ? `Search \"${searchTerm}\"` : "No Search"}
+            {normalizedSearch ? `Search "${searchTerm}"` : "No Search"}
           </strong>
         </div>
       </div>

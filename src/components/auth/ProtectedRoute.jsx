@@ -14,7 +14,6 @@ import { hasModuleAccess } from "../../utils/access";
  * @param {Array} requiredModules - Optional array of dashboard modules required for access
  * @returns {React.Component}
  */
-// eslint-disable-next-line no-unused-vars
 const ProtectedRoute = ({
   Component,
   requiredRoles = [],

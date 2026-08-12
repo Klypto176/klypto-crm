@@ -112,15 +112,6 @@ const EmployeeProjects = () => {
     fetchProjectsData();
   }, [fetchProjectsData]);
 
-  const filteredAssignedTasks = useMemo(
-    () =>
-      assignedTasks.filter(
-        (task) =>
-          taskStatusFilter === "All" || task.status === taskStatusFilter,
-      ),
-    [assignedTasks, taskStatusFilter],
-  );
-
   const projectProgress = useMemo(() => {
     return myProjects.map((project) => {
       const projectTasks = assignedTasks.filter(

@@ -73,6 +73,7 @@ const OrgSetup = () => {
       setTimeout(() => setShowSuccess(false), 3000);
       fetchData();
     } catch (err) {
+      console.error("Failed to update profile", err);
       alert("Failed to update profile");
     } finally {
       setSaving(false);

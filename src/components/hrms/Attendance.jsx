@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { CalendarDays, Clock3, CheckCircle2, XCircle, Loader, FileText } from "lucide-react";
 import apiClient from "../../api/apiClient";
+import { getAttendanceSocket } from "../../api/socketClient";
 import AttendanceMonthlyModal from "./AttendanceMonthlyModal";
 
 const Attendance = () => {
@@ -18,32 +19,48 @@ const Attendance = () => {
   // Modal State
   const [modalEmployee, setModalEmployee] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [empRes, attRes] = await Promise.all([
-          apiClient.get("/employees"),
-          apiClient.get(`/attendance?date=${selectedDate}`),
-        ]);
-        setEmployees(empRes.data);
-        setAttendance(attRes.data);
-      } catch (err) {
-        console.error("Error fetching attendance data", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    
-    // Fetch immediately on mount
-    fetchData();
-
-    // Auto-refresh the dashboard every 15 seconds to catch new biometric punches
-    const intervalId = setInterval(() => {
-      fetchData();
-    }, 15000);
-
-    return () => clearInterval(intervalId);
+  const fetchData = useCallback(async () => {
+    try {
+      const [empRes, attRes] = await Promise.all([
+        apiClient.get("/employees"),
+        apiClient.get(`/attendance?date=${selectedDate}`),
+      ]);
+      setEmployees(empRes.data);
+      setAttendance(attRes.data);
+    } catch (err) {
+      console.error("Error fetching attendance data", err);
+    } finally {
+      setLoading(false);
+    }
   }, [selectedDate]);
+
+  const fetchDataRef = useRef(fetchData);
+  useEffect(() => {
+    fetchDataRef.current = fetchData;
+  }, [fetchData]);
+
+  useEffect(() => {
+    setLoading(true);
+    fetchData();
+  }, [fetchData]);
+
+  // The biometric machine pushes punches to the server the moment they happen;
+  // the server relays them over this socket so the board updates live instead
+  // of polling. Re-fetching on (re)connect also covers anything missed while
+  // the socket was briefly down.
+  useEffect(() => {
+    const socket = getAttendanceSocket();
+    if (!socket) return;
+
+    const handleUpdate = () => fetchDataRef.current?.();
+    socket.on("attendance:updated", handleUpdate);
+    socket.on("connect", handleUpdate);
+
+    return () => {
+      socket.off("attendance:updated", handleUpdate);
+      socket.off("connect", handleUpdate);
+    };
+  }, []);
 
   const activeEmployees = employees.filter(
     (e) => e.status === "Active" || e.status === "Onboarding"

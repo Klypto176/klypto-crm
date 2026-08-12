@@ -81,6 +81,7 @@ const FinancialWorkflows = () => {
       });
       fetchData();
     } catch (err) {
+      console.error("Failed to create transaction", err);
       alert("Failed to create transaction");
     } finally {
       setSubmitting(false);
@@ -111,6 +112,7 @@ const FinancialWorkflows = () => {
       await apiClient.delete(`/finance/${id}`);
       await fetchData();
     } catch (err) {
+      console.error("Failed to delete record", err);
       alert("Failed to delete record");
     } finally {
       setActionLoading(null);

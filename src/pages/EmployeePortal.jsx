@@ -144,12 +144,6 @@ const getStatusStyle = (status) => {
   return { backgroundColor: "var(--tag-bg)", color: "var(--text-muted)" };
 };
 
-const fieldLabelStyle = {
-  fontSize: "12px",
-  color: "var(--text-main)",
-  opacity: 0.78,
-};
-
 const inputStyle = {
   padding: "10px 12px",
   backgroundColor: "var(--input-bg)",

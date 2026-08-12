@@ -213,6 +213,7 @@ const ProjectKanban = () => {
         status: columnId,
       });
     } catch (err) {
+      console.error("Failed to update task status", err);
       setTasks(previousTasks);
     } finally {
       setActionLoading(null);
@@ -251,6 +252,7 @@ const ProjectKanban = () => {
       resetTaskForm();
       fetchData();
     } catch (err) {
+      console.error("Failed to save task", err);
     } finally {
       setSubmitting(false);
     }
@@ -278,6 +280,7 @@ const ProjectKanban = () => {
       await fetchData();
       if (res.data?.id) setSelectedProjectId(res.data.id);
     } catch (err) {
+      console.error("Failed to save project", err);
     } finally {
       setSubmitting(false);
     }

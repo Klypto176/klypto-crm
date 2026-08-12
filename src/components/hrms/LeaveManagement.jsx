@@ -493,8 +493,10 @@ const LeaveManagement = () => {
               <button
                 type="submit"
                 className="btn-primary"
-                style={{ marginTop: "12px" }}
+                disabled={submitting}
+                style={{ marginTop: "12px", display: "flex", alignItems: "center", justifyContent: "center", gap: "8px" }}
               >
+                {submitting && <Loader className="spinner" size={16} />}
                 Submit Request
               </button>
             </form>

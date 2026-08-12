@@ -149,7 +149,7 @@ const KanbanCard = ({
   </motion.div>
 );
 
-const LeadSidePanel = ({ leadId, onClose, onUpdate }) => {
+const LeadSidePanel = ({ leadId, onClose }) => {
   const [lead, setLead] = useState(null);
   const [note, setNote] = useState("");
   const [loading, setLoading] = useState(true);
@@ -477,6 +477,7 @@ const Leads = () => {
       });
       fetchLeads();
     } catch (err) {
+      console.error("Failed to create lead", err);
       alert("Failed to create lead");
     } finally {
       setSubmitting(false);
@@ -539,6 +540,7 @@ const Leads = () => {
       await apiClient.patch(`/leads/${droppedLeadId}`, { status: stageId });
     } catch (err) {
       setLeads(previousLeads);
+      console.error("Failed to update lead status", err);
       alert("Failed to update lead status");
     } finally {
       setActionLoading(null);

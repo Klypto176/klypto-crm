@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   AlertTriangle,
   ShieldAlert,
@@ -69,6 +69,7 @@ const GrievanceManagement = () => {
       setView("dashboard");
       fetchData();
     } catch (err) {
+      console.error("Failed to submit grievance", err);
       alert("Failed to submit grievance");
     } finally {
       setSubmitting(false);
@@ -94,6 +95,7 @@ const GrievanceManagement = () => {
       await apiClient.delete(`/grievances/${id}`);
       await fetchData();
     } catch (err) {
+      console.error("Failed to delete grievance", err);
       alert("Failed to delete grievance");
     } finally {
       setActionLoading(null);

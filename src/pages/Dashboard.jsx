@@ -25,6 +25,12 @@ import {
 import apiClient from "../api/apiClient";
 import Skeleton from "../components/common/Skeleton";
 
+// Fixed, non-uniform heights so the loading bars look natural without calling
+// Math.random() during render (React flags impure calls in render as a bug risk).
+const SKELETON_BAR_HEIGHTS = [
+  [72, 24], [88, 42], [55, 30], [95, 48], [62, 20], [78, 36],
+];
+
 const DashboardSkeleton = () => (
   <div style={{ animation: "fadeIn 0.5s ease" }}>
     <header style={{ marginBottom: "32px" }}>
@@ -67,10 +73,10 @@ const DashboardSkeleton = () => (
       <div className="glass-card" style={{ padding: "24px", minHeight: "350px" }}>
         <Skeleton height="24px" width="150px" style={{ marginBottom: "20px" }} />
         <div style={{ display: "flex", alignItems: "flex-end", gap: "10px", height: "200px", paddingBottom: "20px" }}>
-          {[1, 2, 3, 4, 5, 6].map((i) => (
+          {SKELETON_BAR_HEIGHTS.map(([tall, short], i) => (
             <div key={i} style={{ flex: 1, display: "flex", alignItems: "flex-end", gap: "4px", height: "100%" }}>
-              <Skeleton height={`${Math.random() * 60 + 40}%`} style={{ opacity: 0.5 }} />
-              <Skeleton height={`${Math.random() * 40 + 20}%`} style={{ opacity: 0.3 }} />
+              <Skeleton height={`${tall}%`} style={{ opacity: 0.5 }} />
+              <Skeleton height={`${short}%`} style={{ opacity: 0.3 }} />
             </div>
           ))}
         </div>

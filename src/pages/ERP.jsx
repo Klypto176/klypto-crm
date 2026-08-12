@@ -47,6 +47,15 @@ const TabContent = ({ title, children, showAdd = true }) => (
         flexWrap: "wrap",
       }}
     >
+      {title && <h2 style={{ fontSize: "24px", fontWeight: "700" }}>{title}</h2>}
+      {showAdd && (
+        <button
+          className="btn-primary"
+          style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}
+        >
+          <Plus size={18} /> Add New
+        </button>
+      )}
     </div>
     {children}
   </motion.div>

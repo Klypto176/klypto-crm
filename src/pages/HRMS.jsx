@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   BarChart3,
@@ -64,17 +64,20 @@ const HR = ({ initialTab = "overview" }) => {
   const tabNavRef = useRef(null);
   const dragStateRef = useRef({ isDragging: false, startX: 0, scrollLeft: 0 });
 
-  const tabs = [
-    { id: "overview", label: "Overview", icon: <BarChart3 size={18} /> },
-    { id: "structure", label: "Structure", icon: <GitBranch size={18} /> },
-    { id: "attendance", label: "Attendance", icon: <Clock3 size={18} /> },
-    { id: "leave", label: "Leave", icon: <CalendarCheck2 size={18} /> },
-    { id: "payroll", label: "Payroll", icon: <Wallet2 size={18} /> },
-    { id: "performance", label: "Performance", icon: <Award size={18} /> },
-    { id: "policies", label: "Policies", icon: <FileText size={18} /> },
-    { id: "reimbursements", label: "Reimbursements", icon: <ReceiptText size={18} /> },
-    { id: "resignations", label: "Resignations", icon: <UserMinus size={18} /> },
-  ];
+  const tabs = useMemo(
+    () => [
+      { id: "overview", label: "Overview", icon: <BarChart3 size={18} /> },
+      { id: "structure", label: "Structure", icon: <GitBranch size={18} /> },
+      { id: "attendance", label: "Attendance", icon: <Clock3 size={18} /> },
+      { id: "leave", label: "Leave", icon: <CalendarCheck2 size={18} /> },
+      { id: "payroll", label: "Payroll", icon: <Wallet2 size={18} /> },
+      { id: "performance", label: "Performance", icon: <Award size={18} /> },
+      { id: "policies", label: "Policies", icon: <FileText size={18} /> },
+      { id: "reimbursements", label: "Reimbursements", icon: <ReceiptText size={18} /> },
+      { id: "resignations", label: "Resignations", icon: <UserMinus size={18} /> },
+    ],
+    [],
+  );
 
   useEffect(() => {
     if (!tabs.some((tab) => tab.id === activeTab)) {

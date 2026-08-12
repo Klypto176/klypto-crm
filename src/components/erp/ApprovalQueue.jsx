@@ -41,6 +41,7 @@ const ApprovalQueue = () => {
       await apiClient.post("/approvals/action", { id, type, action });
       setApprovals(prev => prev.filter(item => item.id !== id));
     } catch (err) {
+      console.error("Failed to process approval action", err);
       alert("Failed to process approval action");
     } finally {
       setActioning(null);
