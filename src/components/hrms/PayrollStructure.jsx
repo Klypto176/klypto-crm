@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { motion } from "framer-motion";
 import apiClient from "../../api/apiClient";
+import { formatCurrency } from "../../utils/currency";
 
 const PayrollStructure = () => {
   const [structures, setStructures] = useState([]);
@@ -194,7 +195,7 @@ const PayrollStructure = () => {
           {[
             {
               label: "Total Monthly Payout",
-              amount: `$${totalMonthlyPayout.toLocaleString()}`,
+              amount: formatCurrency(totalMonthlyPayout),
               icon: <BadgeIndianRupee size={18} />,
             },
             {
@@ -406,12 +407,9 @@ const PayrollStructure = () => {
                     Earnings
                   </div>
                   <div style={{ fontSize: "14px", fontWeight: "600" }}>
-                    $
-                    {(
-                      struct.basicSalary +
-                      struct.hra +
-                      struct.allowances
-                    ).toLocaleString()}
+                    {formatCurrency(
+                      struct.basicSalary + struct.hra + struct.allowances,
+                    )}
                   </div>
                 </div>
                 <div>
@@ -425,7 +423,7 @@ const PayrollStructure = () => {
                       color: "#ef4444",
                     }}
                   >
-                    -${struct.deductions.toLocaleString()}
+                    -{formatCurrency(struct.deductions)}
                   </div>
                 </div>
                 <div style={{ textAlign: "right" }}>
@@ -439,13 +437,12 @@ const PayrollStructure = () => {
                       color: "#10b981",
                     }}
                   >
-                    $
-                    {(
+                    {formatCurrency(
                       struct.basicSalary +
-                      struct.hra +
-                      struct.allowances -
-                      struct.deductions
-                    ).toLocaleString()}
+                        struct.hra +
+                        struct.allowances -
+                        struct.deductions,
+                    )}
                   </div>
                 </div>
               </div>

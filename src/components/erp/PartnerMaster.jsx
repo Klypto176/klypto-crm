@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import apiClient from "../../api/apiClient";
+import { formatCurrency } from "../../utils/currency";
 
 const getErrorMessage = (error, fallback) => {
   const payload = error?.response?.data;
@@ -492,7 +493,7 @@ const PartnerMaster = () => {
                     }}
                   >
                     {activeSubTab === "customers"
-                      ? `$${partner.creditLimit?.toLocaleString()}`
+                      ? formatCurrency(partner.creditLimit)
                       : partner.category}
                   </td>
                   <td
@@ -782,7 +783,7 @@ const PartnerMaster = () => {
                         marginBottom: "8px",
                       }}
                     >
-                      Credit Limit ($)
+                      Credit Limit (₹)
                     </label>
                     <input
                       type="number"

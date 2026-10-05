@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import {
   TrendingUp,
   TrendingDown,
-  DollarSign,
+  IndianRupee,
   Wallet2,
   PieChart,
   BarChart,
@@ -10,8 +10,7 @@ import {
   AlertTriangle,
 } from "lucide-react";
 import apiClient from "../../api/apiClient";
-
-const fmt = (n) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(n);
+import { formatCurrency as fmt } from "../../utils/currency";
 
 const ERPAnalytics = () => {
   const [data, setData] = useState(null);
@@ -49,7 +48,7 @@ const ERPAnalytics = () => {
     {
       label: "Total Sales",
       value: fmt(data.totalSales),
-      icon: <DollarSign size={20} />,
+      icon: <IndianRupee size={20} />,
       color: "#10b981",
       trend: "Actual",
       up: true,

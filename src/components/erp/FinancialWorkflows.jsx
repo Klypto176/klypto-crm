@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import apiClient from "../../api/apiClient";
+import { formatCurrency } from "../../utils/currency";
 
 const FinancialWorkflows = () => {
   const [view, setView] = useState("purchases"); // 'purchases' (PURCHASE_ORDER) or 'invoices' (INVOICE)
@@ -186,7 +187,7 @@ const FinancialWorkflows = () => {
             <div
               style={{ fontSize: "28px", fontWeight: "800", color: "#8b5cf6" }}
             >
-              ${stats?.totalReceivables?.toLocaleString() || 0}
+              {formatCurrency(stats?.totalReceivables)}
             </div>
           </div>
           <div
@@ -232,7 +233,7 @@ const FinancialWorkflows = () => {
                 color: "var(--primary)",
               }}
             >
-              ${stats?.totalPayables?.toLocaleString() || 0}
+              {formatCurrency(stats?.totalPayables)}
             </div>
           </div>
           <div
@@ -625,10 +626,7 @@ const FinancialWorkflows = () => {
                       color: "var(--text-main)",
                     }}
                   >
-                    $
-                    {item.amount.toLocaleString(undefined, {
-                      minimumFractionDigits: 2,
-                    })}
+                    {formatCurrency(item.amount, { paise: true })}
                   </div>
                   <div
                     style={{
@@ -868,7 +866,7 @@ const FinancialWorkflows = () => {
                         marginBottom: "8px",
                       }}
                     >
-                      Amount ($)
+                      Amount (₹)
                     </label>
                     <input
                       required

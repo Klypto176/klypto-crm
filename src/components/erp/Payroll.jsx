@@ -12,7 +12,7 @@ import {
   Download,
   BarChart3,
   Scale,
-  DollarSign,
+  IndianRupee,
   PieChart,
   UserCheck,
   Building,
@@ -23,6 +23,7 @@ import {
   Hash,
 } from "lucide-react";
 import apiClient from "../../api/apiClient";
+import { formatCurrency as fmtCurrency } from "../../utils/currency";
 
 // ── Month names ─────────────────────────────────────────────────────────────
 const MONTHS = [
@@ -39,13 +40,6 @@ const MONTHS = [
   "November",
   "December",
 ];
-
-const fmtCurrency = (n) =>
-  new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    maximumFractionDigits: 0,
-  }).format(n);
 
 // ── Status badge ─────────────────────────────────────────────────────────────
 function StatusBadge({ status }) {
@@ -249,7 +243,7 @@ const Payroll = () => {
     {
       id: "structures",
       label: "Salary Structures",
-      icon: <DollarSign size={16} />,
+      icon: <IndianRupee size={16} />,
     },
     { id: "payslips", label: "Payslips", icon: <FileText size={16} /> },
     { id: "compliance", label: "Compliance", icon: <Scale size={16} /> },
@@ -390,7 +384,7 @@ const Payroll = () => {
                   val: loading
                     ? "—"
                     : fmtCurrency(stats?.totalNetPayThisMonth ?? 0),
-                  icon: <DollarSign size={18} />,
+                  icon: <IndianRupee size={18} />,
                   color: "var(--primary)",
                 },
                 {
@@ -725,7 +719,7 @@ const Payroll = () => {
                     color: "var(--text-muted)",
                   }}
                 >
-                  <DollarSign
+                  <IndianRupee
                     size={40}
                     style={{ opacity: 0.3, marginBottom: "12px" }}
                   />
@@ -1676,7 +1670,7 @@ const Payroll = () => {
                         {field.label}
                       </label>
                       <div style={{ position: "relative" }}>
-                        <DollarSign
+                        <IndianRupee
                           size={14}
                           style={{
                             position: "absolute",

@@ -7,7 +7,7 @@ import {
   ShieldAlert,
   Loader,
   Calendar,
-  DollarSign,
+  IndianRupee,
   User,
   CheckCircle2,
 } from "lucide-react";
@@ -114,7 +114,7 @@ const ApprovalQueue = () => {
                         display: "flex", alignItems: "center", justifyContent: "center",
                         color: req.type === 'LEAVE' ? "#8b5cf6" : "#10b981"
                       }}>
-                        {req.type === 'LEAVE' ? <Calendar size={20} /> : <DollarSign size={20} />}
+                        {req.type === 'LEAVE' ? <Calendar size={20} /> : <IndianRupee size={20} />}
                       </div>
                       <div>
                         <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "4px" }}>

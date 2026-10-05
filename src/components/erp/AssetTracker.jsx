@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import {
   Box,
   MapPin,
-  DollarSign,
+  IndianRupee,
   Info,
   Plus,
   Loader,
@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import apiClient from "../../api/apiClient";
+import { formatCurrency } from "../../utils/currency";
 
 const AssetTracker = () => {
   const [assets, setAssets] = useState([]);
@@ -205,7 +206,7 @@ const AssetTracker = () => {
               color: "var(--primary)",
             }}
           >
-            ${stats?.totalValuation?.toLocaleString() || 0}
+            {formatCurrency(stats?.totalValuation)}
           </div>
         </div>
         <div
@@ -543,8 +544,8 @@ const AssetTracker = () => {
                     fontWeight: "700",
                   }}
                 >
-                  <DollarSign size={14} className="text-primary" />{" "}
-                  {asset.value?.toLocaleString()}
+                  <IndianRupee size={14} className="text-primary" />{" "}
+                  {asset.value?.toLocaleString("en-IN")}
                 </div>
                 <div
                   style={{
@@ -792,7 +793,7 @@ const AssetTracker = () => {
                         marginBottom: "8px",
                       }}
                     >
-                      Value ($)
+                      Value (₹)
                     </label>
                     <input
                       type="number"

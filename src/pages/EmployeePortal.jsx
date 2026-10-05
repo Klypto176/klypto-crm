@@ -32,6 +32,7 @@ import {
 import { toast } from "sonner";
 import apiClient from "../api/apiClient";
 import Skeleton from "../components/common/Skeleton";
+import { formatCurrency } from "../utils/currency";
 
 const LiveClock = () => {
   const [time, setTime] = useState(new Date());
@@ -126,9 +127,7 @@ const initialResignationForm = {
 };
 
 const toCurrency = (value) =>
-  value === null || value === undefined
-    ? "-"
-    : Number(value).toLocaleString(undefined, { maximumFractionDigits: 2 });
+  value === null || value === undefined ? "-" : formatCurrency(value);
 
 const getStatusStyle = (status) => {
   const s = status?.toLowerCase();
@@ -692,7 +691,7 @@ const EmployeePortal = () => {
                 <div style={{ textAlign: "right" }}>
                   <p style={{ fontSize: "11px", fontWeight: "700", color: "var(--primary)", textTransform: "uppercase" }}>Monthly Net</p>
                   <h4 style={{ fontSize: "22px", fontWeight: "900", color: "var(--text-main)" }}>
-                    ${latestPayroll ? toCurrency(latestPayroll.netPay) : toCurrency(salaryStructure?.basicSalary) || "0"}
+                    {latestPayroll ? toCurrency(latestPayroll.netPay) : toCurrency(salaryStructure?.basicSalary)}
                   </h4>
                 </div>
               </div>
@@ -1406,7 +1405,7 @@ const EmployeePortal = () => {
                     myReimbursements.map(claim => (
                       <div key={claim.id} style={{ padding: "10px", borderRadius: "8px", border: "1px solid var(--border)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                         <div>
-                          <div style={{ fontWeight: "600", fontSize: "13px" }}>${claim.amount} - {claim.reason}</div>
+                          <div style={{ fontWeight: "600", fontSize: "13px" }}>{formatCurrency(claim.amount, { paise: true })} - {claim.reason}</div>
                           <div style={{ fontSize: "11px", color: "var(--text-muted)" }}>{new Date(claim.date).toLocaleDateString()}</div>
                         </div>
                         <span style={{ 

@@ -14,6 +14,7 @@ import {
   Target,
 } from "lucide-react";
 import apiClient from "../api/apiClient";
+import { formatCurrency } from "../utils/currency";
 
 const KanbanCard = ({
   lead,
@@ -97,7 +98,7 @@ const KanbanCard = ({
           <MessageSquare size={12} /> {lead._count?.notes || 0}
         </span>
         <span style={{ display: "flex", alignItems: "center", gap: "4px" }}>
-          <Target size={12} /> ${lead.value?.toLocaleString() || 0}
+          <Target size={12} /> {formatCurrency(lead.value)}
         </span>
       </div>
       <div

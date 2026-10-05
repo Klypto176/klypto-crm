@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import {
   TrendingUp,
   Users,
-  DollarSign,
+  IndianRupee,
   Target,
   ArrowUpRight,
   ArrowDownRight,
@@ -24,6 +24,7 @@ import {
 } from "../utils/access";
 import apiClient from "../api/apiClient";
 import Skeleton from "../components/common/Skeleton";
+import { formatCurrency } from "../utils/currency";
 
 // Fixed, non-uniform heights so the loading bars look natural without calling
 // Math.random() during render (React flags impure calls in render as a bug risk).
@@ -313,9 +314,9 @@ const Dashboard = () => {
             />
             <StatCard
               title="Pipeline Value"
-              value={crmStats?.totalRevenue || "$0"}
+              value={crmStats?.totalRevenue || formatCurrency(0)}
               trend="Estimated potential"
-              icon={<DollarSign size={24} />}
+              icon={<IndianRupee size={24} />}
               isPositive={true}
             />
             <StatCard
@@ -402,28 +403,28 @@ const Dashboard = () => {
           >
             <StatCard
               title="Total Sales"
-              value={`$${(erpStats?.totalSales || 0).toLocaleString()}`}
+              value={formatCurrency(erpStats?.totalSales)}
               trend="Invoiced Revenue"
-              icon={<DollarSign size={24} />}
+              icon={<IndianRupee size={24} />}
               isPositive={true}
             />
             <StatCard
               title="Operational Cost"
-              value={`$${(erpStats?.operationalCost || 0).toLocaleString()}`}
+              value={formatCurrency(erpStats?.operationalCost)}
               trend="Purchases + Payroll"
               icon={<Wallet2 size={24} />}
               isPositive={false}
             />
             <StatCard
               title="Net Profit"
-              value={`$${(erpStats?.netProfit || 0).toLocaleString()}`}
+              value={formatCurrency(erpStats?.netProfit)}
               trend="Sales minus Costs"
               icon={<TrendingUp size={24} />}
               isPositive={erpStats?.netProfit >= 0}
             />
             <StatCard
               title="Asset Valuation"
-              value={`$${(erpStats?.assetValuation || 0).toLocaleString()}`}
+              value={formatCurrency(erpStats?.assetValuation)}
               trend="Capital Equipment"
               icon={<PieChart size={24} />}
               isPositive={true}
@@ -490,7 +491,7 @@ const Dashboard = () => {
                         initial={{ height: 0 }}
                         animate={{ height: `${salesHeight}%` }}
                         transition={{ delay: i * 0.08, duration: 0.7 }}
-                        title={`${item.label} Sales: $${item.sales.toLocaleString()}`}
+                        title={`${item.label} Sales: ${formatCurrency(item.sales)}`}
                         style={{
                           flex: 1,
                           background:
@@ -503,7 +504,7 @@ const Dashboard = () => {
                         initial={{ height: 0 }}
                         animate={{ height: `${costHeight}%` }}
                         transition={{ delay: i * 0.08 + 0.04, duration: 0.7 }}
-                        title={`${item.label} Cost: $${item.cost.toLocaleString()}`}
+                        title={`${item.label} Cost: ${formatCurrency(item.cost)}`}
                         style={{
                           flex: 1,
                           background:
@@ -645,7 +646,7 @@ const Dashboard = () => {
                   </div>
                   <div style={{ textAlign: "right" }}>
                     <div style={{ fontSize: "14px", fontWeight: "600" }}>
-                      ${lead.value?.toLocaleString() || 0}
+                      {formatCurrency(lead.value)}
                     </div>
                     <div
                       style={{
