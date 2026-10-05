@@ -87,7 +87,10 @@ sudo systemctl reload nginx
 '@
 # Same CRLF stripping as the backend script -- PowerShell's pipe writes
 # \r\n, which breaks every line of the remote script otherwise.
-($remote -replace "`r`n", "`n") | ssh -i $KEY "ubuntu@$EC2_IP" 'bash -s'
+# Strip any bare \r too, not just \r\n pairs -- a stray orphan \r (seen once
+# on the final line before the here-string terminator) survived the \r\n-only
+# replace and broke that one line ("nginx\x0d").
+($remote -replace "`r`n", "`n" -replace "`r", "") | ssh -i $KEY "ubuntu@$EC2_IP" 'bash -s'
 if ($LASTEXITCODE -ne 0) { throw "Release failed on the server. The previous build is kept at ~/klypto-crm/dist-previous." }
 
 Write-Host ""
